@@ -1,0 +1,29 @@
+<!-- miniprogram/pages/usercenter/index.wxml -->
+<block wx:if="{{isManager==0}}">
+  <include src="../../components/booklist/index.wxml" />
+</block>
+<view class="page" wx:if="{{isManager==1}}">
+  <view class="page__hd">
+    <view class="page__title">管理平台</view>
+    <view class="page__desc">列表显示相应信息</view>
+  </view>
+  <view class="page__bd">
+    <view class="weui-panel">
+      <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_small-appmsg">
+          <view class="weui-cells weui-cells_in-small-appmsg">
+            <navigator wx:for="{{managerList}}" wx:key="{{index}}" url="{{item.url}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+              <view class="weui-cell__hd">
+                <image src="{{item.imgsrc}}" style="width: 25px;height: 25px;margin-right: 5px" />
+              </view>
+              <view class="weui-cell__bd weui-cell_primary">
+                <view>{{item.name}}</view>
+              </view>
+              <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </navigator>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

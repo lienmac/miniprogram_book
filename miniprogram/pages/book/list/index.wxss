@@ -1,0 +1,12 @@
+.page__hd{
+  padding: 20px 15px;
+}
+.weui-form-preview{
+  margin-bottom: 20px;
+}
+/* .weui-navbar__slider{
+  width: 33.3333%;
+} */
+.weui-tab__content{
+  padding-top: 20px;
+}

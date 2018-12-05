@@ -1,0 +1,43 @@
+{
+  "cloud": true,
+  "pages": [
+    "pages/index/index",
+    "pages/userConsole/userConsole",
+    "pages/storageConsole/storageConsole",
+    "pages/databaseGuide/databaseGuide",
+    "pages/addFunction/addFunction",
+    "pages/deployFunctions/deployFunctions",
+    "pages/chooseLib/chooseLib",
+    "pages/bookProject/index",
+    "pages/usercenter/index",
+    "pages/beAdmin/index",
+    "pages/activity/index/index",
+    "pages/activity/edit/index",
+    "pages/activity/list/index",
+    "pages/book/list/index"
+  ],
+  "tabBar": {
+    "selectedColor": "#f72398",
+    "list": [
+      {
+        "iconPath": "images/global/tab-icon-1.png",
+        "selectedIconPath": "images/global/tab-icon-1-select.png",
+        "pagePath": "pages/index/index",
+        "text": "预约"
+      },
+      {
+        "iconPath": "images/global/tab-icon-2.png",
+        "selectedIconPath": "images/global/tab-icon-2-select.png",
+        "pagePath": "pages/usercenter/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "预约",
+    "navigationBarTextStyle": "black"
+  }
+}

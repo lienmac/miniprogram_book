@@ -1,0 +1,5 @@
+/* miniprogram/pages/activity/list/index.wxss */
+.weui-media-box__info__meta{
+  width: 100%;
+  line-height: 2;
+}

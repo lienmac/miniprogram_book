@@ -1,0 +1,11 @@
+<!-- miniprogram/pages/beAdmin/index.wxml -->
+<view class="page">
+  <view class="page__hd">
+    <view class="page__title">成为管理员</view>
+    <view class="page__desc">点击按钮后，即可成为管理员角色。</view>
+  </view>
+  <view class="page__bd page__bd_spacing">
+    <button hover-class='none' class="weui-btn" type="primary" wx:if="{{app.globalData.isManager==0}}" bindtap="addManager">成为管理员</button>
+    <button class="weui-btn" disabled="{{true}}" type="primary" wx:else>您已经是管理员</button>
+  </view>
+</view>

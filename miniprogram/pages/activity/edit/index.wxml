@@ -1,0 +1,74 @@
+<!-- miniprogram/pages/activity/edit/index.wxml -->
+<view class="page">
+  <view class="page__hd">
+    <view class="page__title">编辑活动</view>
+    <view class="page__desc">编辑活动</view>
+  </view>
+  <view class="page__bd">
+    <form bindsubmit="formSubmit">
+    <view class="weui-cells__title">
+      <button type="default" size="mini" bindtap="chooseImage" >添加图片</button>
+    </view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_img">
+          <view class="weui-cell__bd">
+            <view class="img">
+              <image wx:if="{{activity.imgsrc}}" src="{{activity.imgsrc}}" mode="aspectFill" bindtap="previewImage"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="weui-cells__title">活动名称</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__bd">
+            <input name="name" placeholder="请输入活动名称" value="{{activity.name}}" type="text" />
+          </view>
+        </view>
+      </view>
+      <view class="weui-cells__title">开始日期</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__bd">
+            <picker name="startdate" mode="date" value="{{activity.startdate}}" start="2018-12-01" end="2020-12-31" bindchange="bindStartDateChange">
+              <view class="picker">开始日期：{{activity.startdate}}</view>
+            </picker>
+          </view>
+        </view>
+      </view>
+      <view class="weui-cells__title">结束日期</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__bd">
+            <picker name="enddate" mode="date" value="{{activity.enddate}}" start="2018-12-01" end="2020-12-31" bindchange="bindEndDateChange">
+              <view class="picker">结束日期：{{activity.enddate}}</view>
+            </picker>
+          </view>
+        </view>
+      </view>
+      <view class="weui-cells__title">活动规则</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_textarea">
+          <view class="weui-cell__bd">
+            <textarea placeholder="在此填写活动规则" name="rule" value="{{activity.rule}}" />
+          </view>
+        </view>
+      </view>
+      <view class="weui-cells__title">优先级别</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__bd">
+            <picker bindchange="bindLevelChange" value="{{index}}" range="{{levelList}}">
+              <view class="picker">
+                当前级别：{{levelList[index]}}
+              </view>
+            </picker>
+          </view>
+        </view>
+      </view>
+      <view class="weui-btn-area">
+        <button hover-class='none' type='primary' formType="submit">提交</button>
+      </view>
+    </form>
+  </view>
+</view>

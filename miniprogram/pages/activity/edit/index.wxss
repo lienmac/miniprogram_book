@@ -1,0 +1,38 @@
+/* miniprogram/pages/activity/edit/index.wxss */
+.img {
+  width: 100%;
+  height: 360rpx;
+  background-color: #ddd;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAABACAMAAAB/a5qVAAAAPFBMVEUAAAC+vr6/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7++vr6/v7+/v7+/v7+/v7+/v7+/v79vtk3FAAAAE3RSTlMAwH9A8DAgEJ/gYLBPP2+QcM+P03U3ygAAARtJREFUWMPt1tmKhTAQRdHMMZN6+/z/v7YI3WWIYG5pDw/Zb4IsA5aF4p/mZsVotrXiE5hJf3ReYBcOUMSNFDlpv9ZvFw2AQI4EsApGGlu14wSn1hE/4PhSyn1HS2yZyd1zJnw1cxxiKMVz2pF0bCdUzsR1HKoM18mo00xHNc7fnseizj/zvtJD86PZjpCX42NL6XA8QcuZEs3+BH39va9hV6Q+Y9L3ftfX+8dmpZ04awIlHWcfEkPNHIcYSrKciCaOk/GOY9VWdC1jTb9DPwxmyg3T79gAKny4iul22ptTpinudoipDlW8ywnodXaGUeN4Ym45LzziLHjGwXCGM5zhXGXIUXecRI434GcFZdmQieKYXyWrxYnRb/YJxCOjirO5KFAAAAAASUVORK5CYII=");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100rpx;
+}
+
+.weui-cell_img {
+  padding: 0;
+}
+.weui-cell_img .weui-cell__bd{
+  padding: 0;
+}
+
+.weui-cell_img image {
+  width: 100%;
+  height: 100%;
+}
+
+.page__hd{
+  padding: 20px 15px;
+}
+.weui-cell__bd{
+  padding:10rpx 0;
+}
+.picker {
+  padding: 0 15px;
+  height: 1.4rem;
+  min-height: 1.4rem;
+  line-height: 1.4rem;
+}
+textarea{
+  height: 80px;
+}
