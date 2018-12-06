@@ -6,6 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    aid: '',
+    tempImg: '',
     activity: {
       imgsrc: '',
       name: '',
@@ -15,7 +17,7 @@ Page({
       number: 0,
       level: 1
     },
-    index:0,
+    index: 0,
     levelList: [1, 2, 3],
     nowDate: ''
   },
@@ -28,10 +30,15 @@ Page({
       sourceType: ['album', 'camera'],
       success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
+        console.log(res)
         const tempFilePaths = res.tempFilePaths
         that.setData({
           'activity.imgsrc': tempFilePaths
         })
+      },
+      fail(err) {
+        console.log(err)
+        if (err.errMsg) {}
       }
     });
   },
@@ -58,7 +65,7 @@ Page({
 
   bindLevelChange: function (e) {
     this.setData({
-      'index':e.detail.value,
+      'index': e.detail.value,
       'activity.level': e.detail.value
     })
   },
@@ -97,7 +104,21 @@ Page({
     })
   },
 
-  formSubmit: function (e) {
+  getData: function (id) {
+    const db = wx.cloud.database()
+    let that = this
+    db.collection('activity').doc(id).get({
+      success: function (res) {
+        // res.data 包含该记录的数据
+        console.log(res.data)
+        that.setData({
+          activity: res.data
+        })
+      }
+    })
+  },
+
+  addData: function (e) {
     let that = this
     that.uploadImg(function (FILEID) {
       const db = wx.cloud.database()
@@ -118,7 +139,7 @@ Page({
             icon: 'success',
             duration: 2000,
             success: function () {
-              wx.navigateTo({
+              wx.redirectTo({
                 url: '/pages/activity/list/index?id=' + res._id
               })
             }
@@ -129,11 +150,100 @@ Page({
       })
     })
   },
+
+  updateData: function (e) {
+    console.log(e)
+    const db = wx.cloud.database()
+    let that = this
+    if (that.data.activity.imgsrc.indexOf('cloud://') > -1) {
+      //普通更新
+      db.collection('activity').doc(that.data.aid).update({
+        data: {
+          // 表示将 done 字段置为 true
+          imgsrc: that.data.activity.imgsrc,
+          name: e.detail.value.name,
+          rule: e.detail.value.rule,
+          startdate: e.detail.value.startdate,
+          enddate: e.detail.value.enddate,
+          number: that.data.activity.number,
+          level: e.detail.value.level
+        },
+        success: function (res) {
+          wx.showToast({
+            title: '活动修改成功，跳转中...',
+            icon: 'success',
+            duration: 2000,
+            success: function () {
+              wx.redirectTo({
+                url: '/pages/activity/list/index?id=' + res._id
+              })
+            }
+          })
+        },
+        fail: console.error
+      })
+    } else {
+      //先上传图片再更新
+      that.uploadImg(function (FILEID) {
+        db.collection('activity').doc(that.data.aid).update({
+          data: {
+            imgsrc: FILEID,
+            name: e.detail.value.name,
+            rule: e.detail.value.rule,
+            startdate: e.detail.value.startdate,
+            enddate: e.detail.value.enddate,
+            number: that.data.activity.number,
+            level: e.detail.value.level
+          },
+          success: function (res) {
+            wx.showToast({
+              title: '活动修改成功，跳转中...',
+              icon: 'success',
+              duration: 2000,
+              success: function () {
+                wx.redirectTo({
+                  url: '/pages/activity/list/index?id=' + res._id
+                })
+              }
+            })
+          },
+          fail: console.error
+        })
+      })
+    }
+  },
+
+  formSubmit: function (e) {
+    if (this.data.aid == '') {
+      this.addData(e)
+    } else {
+      this.updateData(e)
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(options)
+    if (options.id) {
+      this.setData({
+        aid: options.id
+      })
+      this.getData(options.id)
+    } else {
+      this.setData({
+        aid: '',
+        activity: {
+          imgsrc: '',
+          name: '',
+          rule: '',
+          startdate: '',
+          enddate: '',
+          number: 0,
+          level: 1
+        }
+      })
+    }
   },
 
   /**
@@ -146,9 +256,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
