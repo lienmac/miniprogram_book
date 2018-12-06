@@ -14,7 +14,8 @@
     "pages/activity/index/index",
     "pages/activity/edit/index",
     "pages/activity/list/index",
-    "pages/book/list/index"
+    "pages/book/list/index",
+    "pages/book/edit/index"
   ],
   "tabBar": {
     "selectedColor": "#f72398",

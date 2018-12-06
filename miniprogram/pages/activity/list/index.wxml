@@ -8,62 +8,6 @@
     </view>
   </view>
   <view class='page__bd'>
-    <!-- <view class="weui-form-preview" wx:for="{{bookList_notused}}" wx:key="{{index}}">
-      <view class="weui-form-preview__hd">
-        <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label">预约项目</view>
-          <view class="weui-form-preview__value_in-hd">{{item.prejectname}}</view>
-        </view>
-      </view>
-      <view class="weui-form-preview__bd">
-        <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label">订单编号</view>
-          <view class="weui-form-preview__value">{{item.order_id}}</view>
-        </view>
-        <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label">预约日期</view>
-          <view class="weui-form-preview__value">
-            {{item.bookdate[0]}}-{{item.bookdate[1]}} {{item.bookdate[2]}}
-          </view>
-        </view>
-        <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label">预约人</view>
-          <view class="weui-form-preview__value">
-            {{item.realname}} {{sexArray[item.sex-1].name}}
-          </view>
-        </view>
-        <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label">联系方式</view>
-          <view class="weui-form-preview__value">{{item.phone}}</view>
-        </view>
-        <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label">联系地址</view>
-          <view class="weui-form-preview__value">{{item.address}}</view>
-        </view>
-        <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label">备注</view>
-          <view class="weui-form-preview__value">{{item.remark}}</view>
-        </view>
-      </view>
-      <view class="weui-form-preview__ft" wx:if="{{item.isActive==1}}">
-        <navigator url="" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">
-          已使用
-        </navigator>
-      </view>
-      <view class="weui-form-preview__ft" wx:elif="{{item.isOutDate==-1}}">
-        <navigator url="" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">
-          已过期
-        </navigator>
-      </view>
-      <view class="weui-form-preview__ft" wx:else>
-        <navigator class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">
-          取消预约
-        </navigator>
-        <navigator class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">
-          重新编辑
-        </navigator>
-      </view>
-    </view> -->
     <view class="weui-panel" wx:for="{{activityList}}" wx:key="index">
       <view class="weui-panel__bd">
         <view class="weui-media-box weui-media-box_text">
@@ -78,6 +22,14 @@
             <view class="weui-media-box__info__meta">报名人数：{{item.number}}</view>
           </view>
         </view>
+      </view>
+      <view class="weui-panel__ft">
+        <navigator url="/pages/activity/edit/index?id={{item._id}}" open-type="navigate">
+          <view class="weui-cell weui-cell_access weui-cell_link">
+            <view class="weui-cell__bd">查看更多</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+          </view>
+        </navigator>
       </view>
     </view>
   </view>
