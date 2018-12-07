@@ -111,17 +111,28 @@ Page({
     })
   },
 
-  getPhoneNumber: function (e) {},
-
-  onGotUserInfo: function(e) {
+  onGotUserInfo: function (e) {
     console.log(e)
     console.log(e.detail.userInfo)
     console.log(e.detail.rawData)
-    if(e.detail.userInfo){
-      this.setData({
-        isShowCover: false,
-        isShowForm: true,
-        activity_id: e.currentTarget.dataset.id
+    if (e.detail.userInfo) {
+      // this.setData({
+      //   isShowCover: false,
+      //   isShowForm: true,
+      //   activity_id: e.currentTarget.dataset.id
+      // })
+      if (e.currentTarget.dataset.id) {
+        wx.setStorage({
+          key: "activity_id",
+          data: e.currentTarget.dataset.id
+        })
+      } else {
+        wx.removeStorage({
+          key: 'activity_id'
+        })
+      }
+      wx.navigateTo({
+        url: '/pages/book/edit/index'
       })
     }
   },
