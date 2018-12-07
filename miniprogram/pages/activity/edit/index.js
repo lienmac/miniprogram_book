@@ -30,7 +30,7 @@ Page({
       sourceType: ['album', 'camera'],
       success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
-        console.log(res)
+        // console.log(res)
         const tempFilePaths = res.tempFilePaths
         that.setData({
           'activity.imgsrc': tempFilePaths
@@ -38,7 +38,6 @@ Page({
       },
       fail(err) {
         console.log(err)
-        if (err.errMsg) {}
       }
     });
   },
@@ -96,7 +95,7 @@ Page({
         filePath: that.data.activity.imgsrc[0], // 小程序临时文件路径
         success: res => {
           // 返回文件 ID
-          console.log(res.fileID)
+          // console.log(res.fileID)
           CALL(res.fileID)
         },
         fail: console.error

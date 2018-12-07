@@ -2,90 +2,17 @@
 <!-- <view class='page' wx:if="{{openid==''}}">
   <button open-type='getUserInfo' bindgetuserinfo="getAuthInfo">去登录</button>
 </view> -->
-<view class="page" wx:if="{{isShowForm}}">
-  <view class="page__hd">
-    <view class="page__title">我要预约</view>
-    <view class="page__desc">预约新的项目</view>
-  </view>
-  <view class='page__bd'>
-    <form bindsubmit="formSubmit">
-      <view class="weui-cells__title">您的名字</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input">
-          <view class="weui-cell__bd">
-            <input name="realname" placeholder="请输入您的名字" value="{{realname}}" type="text" />
-          </view>
-        </view>
-      </view>
-      <view class="weui-cells__title">手机号码</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input">
-          <view class="weui-cell__bd">
-            <input name="phone" maxlength="11" placeholder="请输入手机号" value="{{phone}}" type="number" />
-          </view>
-        </view>
-      </view>
-      <view class="weui-cells__title">您的性别</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__bd">
-            <picker name="sex" bindchange="bindSexChange" range-key="name" value="{{sexArray[sexIndex]._id}}" range="{{sexArray}}">
-              <view class="picker">{{sexArray[sexIndex].name}}</view>
-            </picker>
-          </view>
-        </view>
-      </view>
-      <view class="weui-cells__title">联系地址</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input">
-          <view class="weui-cell__bd">
-            <input name="address" placeholder="请输入联系地址" value="{{address}}" type="text" />
-          </view>
-        </view>
-      </view>
-      <view class="weui-cells__title">选择项目</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__bd">
-            <picker name="project" bindchange="bindProjectChange" range-key="name" value="{{projectIndex}}" range="{{projectArray}}">
-              <view class="picker">{{projectArray[projectIndex].name}}</view>
-            </picker>
-          </view>
-        </view>
-      </view>
-      <view class="weui-cells__title">选择日期</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__bd">
-            <picker name="date" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-              <view class="picker">
-                {{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}
-              </view>
-            </picker>
-          </view>
-        </view>
-      </view>
-      <view class="weui-cells__title">其他需求</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_textarea">
-          <view class="weui-cell__bd">
-            <textarea placeholder="在此填写其他需求" name="remark" />
-          </view>
-        </view>
-      </view>
-      <view class="weui-btn-area">
-        <button hover-class='none' type='primary' formType="submit">预约</button>
-      </view>
-      <view class="weui-footer" style="margin-top:20px;">
-        <view class="weui-footer__links" wx:if="{{app.globalData.isManager==0&&showAdminEntry==1}}">
-          <navigator url="/pages/beAdmin/index?methods=manager&status=1" class="weui-footer__link">成为管理员</navigator>
-        </view>
-        <view class="weui-footer__text">Power By Laurel Makeup Studio</view>
-      </view>
-    </form>
-  </view>
-</view>
+
 <view class="cover" wx:if="{{isShowCover&&activityData}}">
   <image class="cover_img" src="{{activityData[0].imgsrc}}"></image>
-  <button class="weui-btn mini-btn" data-id="{{activityData[0]._id}}" type="warn" size="mini" plain="true" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">我要参加</button>
+  <button class="weui-btn mini-btn" data-id="{{activityData[0]._id}}" type="primary" size="mini" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">我要参加</button>
+</view>
+<view class="main" wx:else>
+  <button class="weui-btn mini-btn" type="primary" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">我要预约</button>
+  <view class="weui-footer" style="margin-top:20px;">
+    <view class="weui-footer__links" wx:if="{{app.globalData.isManager==0&&showAdminEntry==1}}">
+      <navigator url="/pages/beAdmin/index?methods=manager&status=1" class="weui-footer__link">成为管理员</navigator>
+    </view>
+    <view class="weui-footer__text">Power By Laurel Makeup Studio</view>
+  </view>
 </view>
