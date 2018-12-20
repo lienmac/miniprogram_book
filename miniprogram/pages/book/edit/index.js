@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isShowForm: false,
+    isShowForm: true,
     isShowCover: true,
     orderInfo: {},
     realname: '',
@@ -97,8 +97,8 @@ Page({
         }
         that.setData({
           activityData: arr,
-          isShowCover: true,
-          isShowForm: false
+          isShowCover: false,
+          isShowForm: true
         })
       },
       fail: err => {
