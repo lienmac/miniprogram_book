@@ -3,3 +3,6 @@
   width: 100%;
   line-height: 2;
 }
+.weui-badge{
+  margin-left: 5px;
+}
