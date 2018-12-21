@@ -40,15 +40,15 @@ Page({
     activityData: []
   },
 
-  getAppBasicInfo: function () {
+  getAppBasicInfo: function () { 
     let that = this
     app.getBasicInfo().then(function (info) {
       that.setData({
-        'multiArray[0]': info[0].date,
+        // 'multiArray[0]': info[0].date,
         'currentYear': info[0].year,
         'currentMonth': info[0].nowDate.month,
         'currentDay': info[0].nowDate.day,
-        'projectArray': info[1],
+        // 'projectArray': info[1],
         'nowDate': info[0].year.toString() + info[0].nowDate.month.toString() + info[0].nowDate.day.toString()
       })
       that.getActivity()
@@ -85,7 +85,7 @@ Page({
           // arr.push(item)
           // console.log(arr)
           let condition = dataRange.isDateBetween(date, item.startdate, item.enddate)
-          if (condition) {
+          if (condition&&item.isOpen) {
             arr.push(item)
           }
         })
@@ -133,92 +133,6 @@ Page({
       }
       wx.navigateTo({
         url: '/pages/book/edit/index'
-      })
-    }
-  },
-
-  bindSexChange: function (e) {
-    this.setData({
-      sexIndex: e.detail.value
-    })
-  },
-
-  bindProjectChange: function (e) {
-    this.setData({
-      projectIndex: e.detail.value
-    })
-  },
-
-  bindMultiPickerChange: function (e) {
-    this.setData({
-      multiIndex: e.detail.value
-    })
-  },
-  bindMultiPickerColumnChange: function (e) {
-    var data = {
-      multiArray: this.data.multiArray,
-      multiIndex: this.data.multiIndex
-    };
-    data.multiIndex[e.detail.column] = e.detail.value;
-    this.setData(data);
-  },
-
-  randomNum: function (minNum, maxNum) {
-    switch (arguments.length) {
-      case 1:
-        return parseInt(Math.random() * minNum + 1, 10);
-        break;
-      case 2:
-        return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
-        break;
-      default:
-        return 0;
-        break;
-    }
-  },
-
-  formSubmit: function (e) {
-    let that = this
-    if (e.detail.value.realname !== '' && e.detail.value.phone !== '') {
-      const db = wx.cloud.database()
-      let data = {
-        // order_id:that.data.currentYear+that.data.multiArray[0][e.detail.value.date[0]]+e.detail.value.project,
-        order_id: that.data.nowDate + e.detail.value.project + that.randomNum(10001, 100000),
-        realname: e.detail.value.realname,
-        phone: e.detail.value.phone,
-        address: e.detail.value.address,
-        sex_id: that.data.sexArray[e.detail.value.sex]._id,
-        preject_id: that.data.projectArray[e.detail.value.project]._id,
-        bookdate: [that.data.currentYear, that.data.multiArray[0][e.detail.value.date[0]], that.data.multiArray[1][e.detail.value.date[1]]],
-        createtime: db.serverDate(),
-        updatetime: db.serverDate(),
-        usedTime: null,
-        isActive: 0,
-        usedtime: db.serverDate(),
-        remark: e.detail.value.remark,
-        activity_id: that.data.activity_id
-      }
-      db.collection('order').add({
-        data: data,
-        success: function (res) {
-          wx.showToast({
-            title: '预约成功，跳转中...',
-            icon: 'success',
-            duration: 2000,
-            success: function () {
-              wx.switchTab({
-                url: '/pages/usercenter/index?id=' + res._id
-              })
-            }
-          })
-        },
-        fail: console.error
-      })
-    } else {
-      wx.showToast({
-        title: '请输入名字和联系方式',
-        icon: 'none',
-        duration: 2000
       })
     }
   },

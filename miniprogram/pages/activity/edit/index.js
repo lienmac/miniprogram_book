@@ -15,7 +15,8 @@ Page({
       startdate: '',
       enddate: '',
       number: 0,
-      level: 1
+      level: 1,
+      isOpen: false
     },
     index: 0,
     levelList: [1, 2, 3],
@@ -69,6 +70,12 @@ Page({
     })
   },
 
+  switchChange: function (e) {
+    this.setData({
+      'activity.isOpen': e.detail.value
+    })
+  },
+
   randomNum: function (minNum, maxNum) {
     switch (arguments.length) {
       case 1:
@@ -111,7 +118,8 @@ Page({
         // res.data 包含该记录的数据
         console.log(res.data)
         that.setData({
-          activity: res.data
+          activity: res.data,
+          index:parseInt(res.data.level)-1
         })
       }
     })
@@ -128,7 +136,8 @@ Page({
         startdate: e.detail.value.startdate,
         enddate: e.detail.value.enddate,
         number: 0,
-        level: e.detail.value.level
+        level: that.data.levelList[that.data.index],
+        isOpen:that.data.activity.isOpen
       }
       db.collection('activity').add({
         data: activity,
@@ -165,7 +174,8 @@ Page({
           startdate: e.detail.value.startdate,
           enddate: e.detail.value.enddate,
           number: that.data.activity.number,
-          level: e.detail.value.level
+          level: that.data.levelList[that.data.index],
+          isOpen:that.data.activity.isOpen
         },
         success: function (res) {
           wx.showToast({
@@ -192,7 +202,8 @@ Page({
             startdate: e.detail.value.startdate,
             enddate: e.detail.value.enddate,
             number: that.data.activity.number,
-            level: e.detail.value.level
+            level: that.data.levelList[that.data.index],
+            isOpen:that.data.activity.isOpen
           },
           success: function (res) {
             wx.showToast({
