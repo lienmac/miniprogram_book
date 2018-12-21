@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    bid: '',
     isShowForm: true,
     isShowCover: true,
     orderInfo: {},
@@ -20,6 +21,8 @@ Page({
     projectIndex: 0,
     sexIndex: 0,
     projectArray: [],
+    startdate: '',
+    enddate: '',
     multiArray: [
       [],
       ['上午', '下午']
@@ -113,11 +116,11 @@ Page({
 
   getPhoneNumber: function (e) {},
 
-  onGotUserInfo: function(e) {
+  onGotUserInfo: function (e) {
     console.log(e)
     console.log(e.detail.userInfo)
     console.log(e.detail.rawData)
-    if(e.detail.userInfo){
+    if (e.detail.userInfo) {
       this.setData({
         isShowCover: false,
         isShowForm: true,
@@ -152,6 +155,18 @@ Page({
     this.setData(data);
   },
 
+  bindStartDateChange: function (e) {
+    this.setData({
+      'startdate': e.detail.value
+    })
+  },
+
+  bindEndDateChange: function (e) {
+    this.setData({
+      'enddate': e.detail.value
+    })
+  },
+
   randomNum: function (minNum, maxNum) {
     switch (arguments.length) {
       case 1:
@@ -166,7 +181,7 @@ Page({
     }
   },
 
-  formSubmit: function (e) {
+  formAddData: function (e) {
     let that = this
     if (e.detail.value.realname !== '' && e.detail.value.phone !== '') {
       const db = wx.cloud.database()
@@ -178,11 +193,14 @@ Page({
         address: e.detail.value.address,
         sex_id: that.data.sexArray[e.detail.value.sex]._id,
         preject_id: that.data.projectArray[e.detail.value.project]._id,
-        bookdate: [that.data.currentYear, that.data.multiArray[0][e.detail.value.date[0]], that.data.multiArray[1][e.detail.value.date[1]]],
+        //bookdate: [that.data.currentYear, that.data.multiArray[0][e.detail.value.date[0]], that.data.multiArray[1][e.detail.value.date[1]]],
+        startdate: that.data.startdate,
+        enddate: that.data.enddate,
         createtime: db.serverDate(),
         updatetime: db.serverDate(),
         usedTime: null,
         isActive: 0,
+        isCancel: 0,
         usedtime: db.serverDate(),
         remark: e.detail.value.remark,
         activity_id: that.data.activity_id
@@ -212,11 +230,115 @@ Page({
     }
   },
 
+  formUpdateData: function (e) {
+    const db = wx.cloud.database()
+    let that = this
+    db.collection('order').doc(that.data.bid).update({
+      data: {
+        realname: e.detail.value.realname,
+        phone: e.detail.value.phone,
+        address: e.detail.value.address,
+        sex_id: that.data.sexArray[e.detail.value.sex]._id,
+        preject_id: that.data.projectArray[e.detail.value.project]._id,
+        startdate: that.data.startdate,
+        enddate: that.data.enddate,
+        updatetime: db.serverDate(),
+        remark: e.detail.value.remark,
+        activity_id: that.data.activity_id
+      },
+      success(res) {
+        console.log(res.data)
+        wx.showToast({
+          title: '更新预约成功',
+          icon: 'success',
+          duration: 2000
+        })
+      }
+    })
+  },
+
+  formSubmit: function (e) {
+    if (this.data.bid == '') {
+      this.formAddData(e)
+    } else {
+      this.formUpdateData(e)
+    }
+  },
+
+  getData:function(id){
+    const db = wx.cloud.database()
+    let that = this
+    db.collection('order').doc(id).get({
+      success: function (res) {
+        // res.data 包含该记录的数据
+        console.log(res.data)
+        var i = 0
+        that.data.projectArray.forEach(function(item,index){
+          if(res.data.preject_id==item._id){
+            i=index
+          }
+        })
+        console.log(i)
+        that.setData({
+          realname: res.data.realname,
+          phone: res.data.phone,
+          address: res.data.address,
+          startdate:res.data.startdate,
+          enddate:res.data.enddate,
+          remark: res.data.remark,
+          sexIndex:res.data.sex_id,
+          projectIndex: i
+        })
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     // let that = this
+    if (options.id) {
+      this.setData({
+        bid: options.id
+      })
+      this.getData(options.id)
+    } else {
+      this.setData({
+        bid: '',
+        isShowForm: true,
+        isShowCover: true,
+        orderInfo: {},
+        realname: '',
+        phone: '',
+        address: '',
+        openid: '',
+        activity_id: '',
+        projectIndex: 0,
+        sexIndex: 0,
+        projectArray: [],
+        startdate: '',
+        enddate: '',
+        multiArray: [
+          [],
+          ['上午', '下午']
+        ],
+        currentYear: 0,
+        currentMonth: 0,
+        currentDay: 0,
+        multiIndex: [0, 0],
+        sexArray: [{
+          _id: 0,
+          name: '先生'
+        }, {
+          _id: 1,
+          name: '女士'
+        }],
+        nowDate: '',
+        showAdminEntry: 0,
+        activityData: []
+      })
+    }
     if (app.globalData.openid) {
       this.setData({
         openid: app.globalData.openid
@@ -225,11 +347,12 @@ Page({
       this.getAuthInfo()
     }
     this.getAppBasicInfo()
-    if (options.method == 'manager' && options.status == '1') {
-      this.setData({
-        showAdminEntry: 1
-      })
-    }
+    
+    // if (options.method == 'manager' && options.status == '1') {
+    //   this.setData({
+    //     showAdminEntry: 1
+    //   })
+    // }
     // this.getActivity()
   },
 
