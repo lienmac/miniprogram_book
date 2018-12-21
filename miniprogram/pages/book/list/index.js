@@ -247,6 +247,35 @@ Page({
       activeIndex: e.currentTarget.id
     });
   },
+
+  bindCancelBook: function(e){
+    wx.showModal({
+      title: '是否取消',
+      content: '点击确定后将无法进行此次预约',
+      success(res) {
+        if (res.confirm) {
+          console.log(e.currentTarget.dataset.id)
+          const db = wx.cloud.database()
+          db.collection('order').doc(e.currentTarget.dataset.id).update({
+            data: {
+              isCancel: 1
+            },
+            success(res) {
+              console.log(res.data)
+              wx.showToast({
+                title: '已经取消此次预约',
+                icon: 'success',
+                duration: 2000
+              })
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

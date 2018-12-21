@@ -1,1 +1,205 @@
-<include src="../../../components/booklist/index.wxml" />
+<view class='page'>
+  <view class="page__hd">
+    <view class="page__title">我的预约</view>
+    <view class="page__desc">预约过的项目可以在此查看</view>
+  </view>
+  <view class='page__bd'>
+    <view class="weui-tab">
+      <view class="weui-navbar">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+        </block>
+        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+      </view>
+      <view class="weui-tab__panel">
+        <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+          <view class="weui-form-preview" wx:for="{{bookList_notused}}" wx:key="{{index}}">
+            <view class="weui-form-preview__hd">
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">预约项目</view>
+                <view class="weui-form-preview__value_in-hd">{{item.prejectname}}</view>
+              </view>
+            </view>
+            <view class="weui-form-preview__bd">
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">订单编号</view>
+                <view class="weui-form-preview__value">{{item.order_id}}</view>
+              </view>
+              <!-- <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">预约日期</view>
+                <view class="weui-form-preview__value">
+                  {{item.bookdate[0]}}-{{item.bookdate[1]}} {{item.bookdate[2]}}
+                </view>
+              </view> -->
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">开始日期</view>
+                <view class="weui-form-preview__value">
+                  {{item.startdate}}
+                </view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">结束日期</view>
+                <view class="weui-form-preview__value">
+                  {{item.enddate}}
+                </view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">预约人</view>
+                <view class="weui-form-preview__value">
+                  {{item.realname}} {{sexArray[item.sex-1].name}}
+                </view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">联系方式</view>
+                <view class="weui-form-preview__value">{{item.phone}}</view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">联系地址</view>
+                <view class="weui-form-preview__value">{{item.address}}</view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">备注</view>
+                <view class="weui-form-preview__value">{{item.remark}}</view>
+              </view>
+            </view>
+            <view class="weui-form-preview__ft">
+              <view bind:tap="bindCancelBook" data-id="{{item._id}}" class="weui-form-preview__btn weui-form-preview__btn_default">
+                取消预约
+              </view>
+              <navigator url="/pages/book/edit/index?id={{item._id}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">
+                重新编辑
+              </navigator>
+            </view>
+          </view>
+        </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+          <view class="weui-form-preview" wx:for="{{bookList_used}}" wx:key="{{index}}">
+            <view class="weui-form-preview__hd">
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">预约项目</view>
+                <view class="weui-form-preview__value_in-hd">{{item.prejectname}}</view>
+              </view>
+            </view>
+            <view class="weui-form-preview__bd">
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">订单编号</view>
+                <view class="weui-form-preview__value">{{item.order_id}}</view>
+              </view>
+              <!-- <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">预约日期</view>
+                <view class="weui-form-preview__value">
+                  {{item.bookdate[0]}}-{{item.bookdate[1]}} {{item.bookdate[2]}}
+                </view>
+              </view> -->
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">开始日期</view>
+                <view class="weui-form-preview__value">
+                  {{item.startdate}}
+                </view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">结束日期</view>
+                <view class="weui-form-preview__value">
+                  {{item.enddate}}
+                </view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">使用日期</view>
+                <view class="weui-form-preview__value">
+                  {{item.usedTime}}
+                </view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">预约人</view>
+                <view class="weui-form-preview__value">
+                  {{item.realname}} {{sexArray[item.sex-1].name}}
+                </view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">联系方式</view>
+                <view class="weui-form-preview__value">{{item.phone}}</view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">联系地址</view>
+                <view class="weui-form-preview__value">{{item.address}}</view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">备注</view>
+                <view class="weui-form-preview__value">{{item.remark}}</view>
+              </view>
+            </view>
+            <view class="weui-form-preview__ft" wx:if="{{item.isActive==1}}">
+              <navigator url="" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">
+                已使用
+              </navigator>
+            </view>
+          </view>
+        </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+          <view class="weui-form-preview" wx:for="{{bookList_outdate}}" wx:key="{{index}}">
+            <view class="weui-form-preview__hd">
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">预约项目</view>
+                <view class="weui-form-preview__value_in-hd">{{item.prejectname}}</view>
+              </view>
+            </view>
+            <view class="weui-form-preview__bd">
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">订单编号</view>
+                <view class="weui-form-preview__value">{{item.order_id}}</view>
+              </view>
+              <!-- <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">预约日期</view>
+                <view class="weui-form-preview__value">
+                  {{item.bookdate[0]}}-{{item.bookdate[1]}} {{item.bookdate[2]}}
+                </view>
+              </view> -->
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">开始日期</view>
+                <view class="weui-form-preview__value">
+                  {{item.startdate}}
+                </view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">结束日期</view>
+                <view class="weui-form-preview__value">
+                  {{item.enddate}}
+                </view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">预约人</view>
+                <view class="weui-form-preview__value">
+                  {{item.realname}} {{sexArray[item.sex-1].name}}
+                </view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">联系方式</view>
+                <view class="weui-form-preview__value">{{item.phone}}</view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">联系地址</view>
+                <view class="weui-form-preview__value">{{item.address}}</view>
+              </view>
+              <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">备注</view>
+                <view class="weui-form-preview__value">{{item.remark}}</view>
+              </view>
+            </view>
+            <view class="weui-form-preview__ft" wx:if="{{item.isCancel==1}}">
+              <navigator url="" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">
+                已取消
+              </navigator>
+            </view>
+            <view class="weui-form-preview__ft" wx:elif="{{item.isOutDate==-1}}">
+              <navigator url="" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">
+                已过期
+              </navigator>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
